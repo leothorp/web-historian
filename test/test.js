@@ -26,7 +26,7 @@ describe("server", function() {
       it("should return the content of a website from the archive", function (done) {
         var fixtureName = "www.google.com";
         var fixturePath = archive.paths.archivedSites + "/" + fixtureName;
-
+        console.log(fixturePath);
         // Create or clear the file.
         var fd = fs.openSync(fixturePath, "w");
         fs.writeSync(fd, "google");
@@ -57,7 +57,7 @@ describe("server", function() {
 
         request
           .post("/")
-          .send({ url: url })
+          .send('url=' + url)
           .expect(302, function (err) {
             if (!err) {
               var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
@@ -146,7 +146,7 @@ describe("archive helpers", function(){
       setTimeout(function () {
         expect(fs.readdirSync(archive.paths.archivedSites)).to.deep.equal(urlArray);
         done();
-      }, 25);
+      }, 1500);
     });
   });
 });
